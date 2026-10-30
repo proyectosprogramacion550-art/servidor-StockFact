@@ -10,6 +10,8 @@ const authRoutes = require('./src/routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3004;
+const usuarioRoutes = require("./routes/usuarioRoutes");
+app.use("/api/usuarios", usuarioRoutes);
 
 app.use(cors());
 app.use(express.json());
