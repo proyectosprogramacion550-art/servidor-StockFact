@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const Usuario = require("../models/Usuario");
 
-// Listar todos de mi empresa
+// Listar todos los usuarios de mi empresa
 exports.listarTodos = async (req, res) => {
   try {
     const usuarios = await Usuario.findAll({
@@ -14,11 +14,11 @@ exports.listarTodos = async (req, res) => {
   }
 };
 
-// Crear usuario (solo admin)
+// Crear nuevo usuario (solo admin)
 exports.crearUsuario = async (req, res) => {
   try {
     if (req.usuario.rol !== "admin") {
-      return res.status(403).json({ error: "Solo el admin puede crear usuarios" });
+      return res.status(403).json({ error: "Solo el administrador puede crear usuarios" });
     }
 
     const { nombre, email, password, rol } = req.body;
@@ -32,8 +32,8 @@ exports.crearUsuario = async (req, res) => {
       EmpresaId: req.usuario.EmpresaId
     });
 
-    const { password: _, ...usuarioSinPass } = usuario.toJSON();
-    res.status(201).json(usuarioSinPass);
+    const { password: _, ...usuarioSinContraseña } = usuario.toJSON();
+    res.status(201).json(usuarioSinContraseña);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
